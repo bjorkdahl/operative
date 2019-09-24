@@ -1,16 +1,11 @@
 import React from 'react'
-import logo from './logo.svg'
 import Text from './components/atoms/Text'
-import './App.css'
 
-function App() {
+const App: React.FunctionComponent = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Text>
-          Edit <code>src/App.js</code> and save to reload.
-        </Text>
+        <Text>Edit and save to reload.</Text>
         <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
           Learn React
         </a>

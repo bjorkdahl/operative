@@ -1,0 +1,39 @@
+@import 'config/variables.scss';
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i&display=swap');
+
+.text {
+    font-family: Roboto;
+    color: $primaryColor;
+}
+
+.textSmall {
+    font-size: 14px;
+}
+
+.textLarge {
+    font-size: 22px;
+}
+
+.textBold {
+    font-weight: 700;
+}
+
+.textItalic {
+    font-style: italic
+}
+
+.textWarning {
+    color: $warningColor;
+}
+
+.textEllipsis {
+    text-overflow: ellipsis;
+}
+
+.textUppercase {
+    text-transform: uppercase;
+}
+
+.textStrikethrough {
+    text-decoration: line-through;
+}
