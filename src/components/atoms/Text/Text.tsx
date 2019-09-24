@@ -5,7 +5,7 @@ import styles from './Text.module.scss'
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 interface Props {
-  children: any
+  children?: any
   small?: boolean
   large?: boolean
   bold?: boolean

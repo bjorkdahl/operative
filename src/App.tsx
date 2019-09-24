@@ -1,14 +1,27 @@
-import React from 'react'
+import React, { Suspense, lazy } from 'react'
+import { Route, Switch, match } from 'react-router-dom'
 import Text from './components/atoms/Text'
 
-const App: React.FunctionComponent = () => {
+import { CubeSpinner } from 'react-spinners-kit'
+const IndexScreen = lazy(() => import('./screens/IndexScreen'))
+const AboutScreen = lazy(() => import('./screens/AboutScreen'))
+
+interface Props {
+  match: match
+  history: History
+}
+
+const App: React.FunctionComponent<Props> = () => {
   return (
     <div className="App">
       <header className="App-header">
         <Text>Edit and save to reload.</Text>
-        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
+        <Suspense fallback={<CubeSpinner />}>
+          <Switch>
+            <Route exact path="/" component={IndexScreen} />
+            <Route path="/about" component={AboutScreen}></Route>
+          </Switch>
+        </Suspense>
       </header>
     </div>
   )
