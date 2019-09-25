@@ -2,10 +2,7 @@ import React from 'react'
 import cx from 'classnames'
 import styles from './Text.module.scss'
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 interface Props {
-  children?: any
   small?: boolean
   large?: boolean
   bold?: boolean
@@ -39,7 +36,11 @@ const Text: React.FunctionComponent<Props> = ({
     [styles.textUppercase]: uppercase,
     [styles.textStrikethrough]: strikethrough,
   })
-  return inline ? <span className={classNames}>{children}</span> : <p className={classNames}>{children}</p>
+  return inline ? (
+    <span className={classNames}>{children}</span>
+  ) : (
+    <p className={classNames}>{children}</p>
+  )
 }
 
 export default Text

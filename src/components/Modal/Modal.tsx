@@ -14,10 +14,7 @@ const customStyles = {
   },
 }
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 interface Props {
-  children: any
   isOpen: boolean
   onRequestClose(): any
   contentLabel: string
