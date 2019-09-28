@@ -1,47 +1,43 @@
 @import 'config/variables.scss';
 
-.text {
+h1 {
+    font-size: 45px;
+}
+
+.heading {
     font-family: Roboto;
     color: $primaryColor;
     letter-spacing: 1px;
 }
 
-.textSmall {
-    font-size: 14px;
-}
-
-.textLarge {
-    font-size: 18px;
-}
-
-.textLight {
+.headingLight {
     font-weight: 300;
 }
 
-.textBold {
-    font-weight: 700;
+.headingBold {
+    font-weight: 900;
 }
 
-.textItalic {
+.headingItalic {
     font-style: italic
 }
 
-.textWarning {
+.headingWarning {
     color: $warningColor;
 }
 
-.textEllipsis {
+.headingEllipsis {
     text-overflow: ellipsis;
 }
 
-.textUppercase {
+.headingUppercase {
     text-transform: uppercase;
 }
 
-.textStrikethrough {
+.headingStrikethrough {
     text-decoration: line-through;
 }
 
-.textWhite {
+.headingWhite {
     color: rgb(240, 240, 240);
 }

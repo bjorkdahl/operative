@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import styles from './HeroHeader.module.scss'
 import debounce from 'lodash/debounce'
+import Text from 'components/atoms/Text/Text'
+import Heading from 'components/atoms/Heading/Heading'
 import {
   fullsizeImage,
   desktopImage,
@@ -38,7 +40,15 @@ const HeroHeader: React.FunctionComponent = () => {
     <div className={styles.container}>
       <img src={image} className={styles.image} alt="whatever" />
       <div className={styles.innerContainer}>
-        <h1 className={styles.heading}>WOW IT WORKS!</h1>
+        <div className={styles.content}>
+          <Heading large white bold uppercase>
+            Datadriven hälsoanalys
+          </Heading>
+          <Text large white light>
+            Samla all din information från Runkeeper, Strava, Samsung Health och
+            Apple Health på ett och samma ställe.
+          </Text>
+        </div>
       </div>
     </div>
   )
