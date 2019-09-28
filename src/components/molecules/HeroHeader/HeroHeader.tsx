@@ -11,6 +11,11 @@ import {
   tabletImage,
 } from 'images'
 
+interface Props {
+  heading: string
+  text: string
+}
+
 const getHeroImage = (): string => {
   switch (true) {
     case window.innerWidth > 1600:
@@ -26,7 +31,7 @@ const getHeroImage = (): string => {
   }
 }
 
-const HeroHeader: React.FunctionComponent = () => {
+const HeroHeader: React.FunctionComponent<Props> = ({ heading, text }) => {
   const [image, setImage] = useState(getHeroImage())
   const handleResize = (): void => setImage(getHeroImage())
 
@@ -42,11 +47,10 @@ const HeroHeader: React.FunctionComponent = () => {
       <div className={styles.innerContainer}>
         <div className={styles.content}>
           <Heading large white bold uppercase>
-            Datadriven hälsoanalys
+            {heading}
           </Heading>
           <Text large white light>
-            Samla all din information från Runkeeper, Strava, Samsung Health och
-            Apple Health på ett och samma ställe.
+            {text}
           </Text>
         </div>
       </div>
