@@ -42,10 +42,10 @@ const Slider: React.FunctionComponent = () => {
       content: (
         <div className={styles.slide}>
           <span className={styles.firstSlide}>
-            <Text bold largeAF uppercase white shadow noMargin>
+            <Text bold largeAF uppercase white noMargin shadow>
               {strings.get('TAGLINE')}
             </Text>
-            <Text large white>
+            <Text large white noMargin shadow>
               {strings.get('TAGLINE_DESC')}
             </Text>
           </span>
@@ -59,10 +59,10 @@ const Slider: React.FunctionComponent = () => {
       content: (
         <div className={styles.slide}>
           <span className={styles.secondSlide}>
-            <Text bold largeAF uppercase white shadow noMargin>
+            <Text bold largeAF uppercase white noMargin shadow>
               {strings.get('TAGLINE')}
             </Text>
-            <Text large white>
+            <Text large white noMargin shadow>
               {strings.get('TAGLINE_DESC')}
             </Text>
           </span>
@@ -76,10 +76,10 @@ const Slider: React.FunctionComponent = () => {
       content: (
         <div className={styles.slide}>
           <span className={styles.thirdSlide}>
-            <Text bold largeAF uppercase white shadow noMargin>
+            <Text bold largeAF uppercase white noMargin shadow>
               {strings.get('TAGLINE')}
             </Text>
-            <Text large white>
+            <Text large white noMargin shadow>
               {strings.get('TAGLINE_DESC')}
             </Text>
           </span>

@@ -19,7 +19,7 @@
 }
 
 .textShadow {
-    text-shadow: 0 0 13px rgba(150, 150, 150, 1);
+    text-shadow: 0 0 13px rgb(85, 85, 85);
 }
 
 .textLight {
@@ -52,6 +52,10 @@
 
 .textWhite {
     color: rgb(240, 240, 240);
+}
+
+.textUnderline {
+    border-bottom: 2px solid #FFF
 }
 
 .textNoMargin {

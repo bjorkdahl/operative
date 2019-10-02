@@ -1,8 +1,9 @@
 import React, { Suspense, lazy } from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { CubeSpinner } from 'react-spinners-kit'
-import { CssBaseline, Container } from '@material-ui/core'
+import { CssBaseline } from '@material-ui/core'
 import Slider from './components/molecules/Slider'
+import NavBar from './components/molecules/NavBar'
 const IndexScreen = lazy(() => import('./screens/IndexScreen/IndexScreen'))
 const AboutScreen = lazy(() => import('./screens/AboutScreen/AboutScreen'))
 
@@ -12,17 +13,15 @@ const App: React.FunctionComponent = () => {
       <CssBaseline />
       <Switch>
         <Route exact path="/">
+          <NavBar />
           <Slider />
         </Route>
-        <Container maxWidth="lg">
-          <Route exact path="/">
-            <IndexScreen />
-          </Route>
-          <Route path="/about">
-            <AboutScreen />
-          </Route>
-          <Redirect to="/" />
-        </Container>
+        <Route exact path="/">
+          <IndexScreen />
+        </Route>
+        <Route path="/about">
+          <AboutScreen />
+        </Route>
       </Switch>
     </Suspense>
   )

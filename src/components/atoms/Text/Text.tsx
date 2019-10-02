@@ -17,6 +17,7 @@ interface Props {
   strikethrough?: boolean
   white?: boolean
   noMargin?: boolean
+  underline?: boolean
 }
 
 const Text: React.FunctionComponent<Props> = ({
@@ -35,6 +36,7 @@ const Text: React.FunctionComponent<Props> = ({
   strikethrough,
   white,
   noMargin,
+  underline,
 }) => {
   const classNames: string = cx(styles.text, {
     [styles.textSmall]: small,
@@ -50,6 +52,7 @@ const Text: React.FunctionComponent<Props> = ({
     [styles.textStrikethrough]: strikethrough,
     [styles.textWhite]: white,
     [styles.textNoMargin]: noMargin,
+    [styles.textUnderline]: underline,
   })
   return inline ? (
     <span className={classNames}>{children}</span>
