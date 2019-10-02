@@ -16,7 +16,7 @@ interface Props {
   text: string
 }
 
-const getHeroImage = (): string => {
+const selectImageSize = (): string => {
   switch (true) {
     case window.innerWidth > 1600:
       return fullsizeImage
@@ -32,8 +32,8 @@ const getHeroImage = (): string => {
 }
 
 const HeroHeader: React.FunctionComponent<Props> = ({ heading, text }) => {
-  const [image, setImage] = useState(getHeroImage())
-  const handleResize = (): void => setImage(getHeroImage())
+  const [image, setImage] = useState(selectImageSize())
+  const handleResize = (): void => setImage(selectImageSize())
 
   useEffect(() => {
     const eventCallback = debounce(handleResize, 1000)

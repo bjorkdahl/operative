@@ -2,8 +2,7 @@ import React, { Suspense, lazy } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { CubeSpinner } from 'react-spinners-kit'
 import { CssBaseline, Container } from '@material-ui/core'
-import HeroHeader from './components/molecules/HeroHeader/HeroHeader'
-import strings from 'strings'
+import Slider from './components/molecules/Slider'
 const IndexScreen = lazy(() => import('./screens/IndexScreen/IndexScreen'))
 const AboutScreen = lazy(() => import('./screens/AboutScreen/AboutScreen'))
 
@@ -13,10 +12,7 @@ const App: React.FunctionComponent = () => {
       <CssBaseline />
       <Switch>
         <Route exact path="/">
-          <HeroHeader
-            heading={strings.get('HERO_HEADING')}
-            text={strings.get('HERO_TEXT')}
-          />
+          <Slider />
         </Route>
         <Container maxWidth="lg">
           <Route exact path="/">

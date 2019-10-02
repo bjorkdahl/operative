@@ -5,6 +5,8 @@ import styles from './Text.module.scss'
 interface Props {
   small?: boolean
   large?: boolean
+  largeAF?: boolean
+  shadow?: boolean
   light?: boolean
   bold?: boolean
   italic?: boolean
@@ -14,12 +16,15 @@ interface Props {
   uppercase?: boolean
   strikethrough?: boolean
   white?: boolean
+  noMargin?: boolean
 }
 
 const Text: React.FunctionComponent<Props> = ({
   children,
   small,
   large,
+  largeAF,
+  shadow,
   light,
   bold,
   italic,
@@ -29,10 +34,13 @@ const Text: React.FunctionComponent<Props> = ({
   uppercase,
   strikethrough,
   white,
+  noMargin,
 }) => {
   const classNames: string = cx(styles.text, {
     [styles.textSmall]: small,
     [styles.textLarge]: large,
+    [styles.textLargeAF]: largeAF,
+    [styles.textShadow]: shadow,
     [styles.textLight]: light,
     [styles.textBold]: bold,
     [styles.textItalic]: italic,
@@ -41,6 +49,7 @@ const Text: React.FunctionComponent<Props> = ({
     [styles.textUppercase]: uppercase,
     [styles.textStrikethrough]: strikethrough,
     [styles.textWhite]: white,
+    [styles.textNoMargin]: noMargin,
   })
   return inline ? (
     <span className={classNames}>{children}</span>
