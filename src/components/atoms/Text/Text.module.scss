@@ -14,6 +14,14 @@
     font-size: 18px;
 }
 
+.textLargeAF {
+    font-size: 8em;
+}
+
+.textShadow {
+    text-shadow: 0 0 13px rgb(85, 85, 85);
+}
+
 .textLight {
     font-weight: 300;
 }
@@ -44,4 +52,12 @@
 
 .textWhite {
     color: rgb(240, 240, 240);
+}
+
+.textUnderline {
+    border-bottom: 2px solid #FFF
+}
+
+.textNoMargin {
+    margin: 0;
 }

@@ -1,0 +1,26 @@
+@import '../../../config/variables.scss';
+
+.navContainer {
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+}
+
+.itemContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    p {
+        margin: 5px;
+        padding: 5px;
+    }
+    
+    a {
+        text-decoration: none;
+    }
+}
+
+.active {
+    border-bottom: 2px solid white;
+}
