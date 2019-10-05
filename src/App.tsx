@@ -2,9 +2,11 @@ import React, { Suspense, lazy } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { CubeSpinner } from 'react-spinners-kit'
 import { CssBaseline } from '@material-ui/core'
-import Slider from './components/molecules/Slider'
+import Slider from './components/molecules/FullPageScroll'
 import NavBar from './components/molecules/NavBar'
+
 const IndexScreen = lazy(() => import('./screens/IndexScreen/IndexScreen'))
+const LoginScreen = lazy(() => import('./screens/LoginScreen/LoginScreen'))
 const AboutScreen = lazy(() => import('./screens/AboutScreen/AboutScreen'))
 
 const App: React.FunctionComponent = () => {
@@ -21,6 +23,9 @@ const App: React.FunctionComponent = () => {
         </Route>
         <Route path="/about">
           <AboutScreen />
+        </Route>
+        <Route path="/login">
+          <LoginScreen />
         </Route>
       </Switch>
     </Suspense>

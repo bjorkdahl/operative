@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import debounce from 'lodash/debounce'
-import styles from './Slider.module.scss'
+import styles from './FullPageScroll.module.scss'
 import { ISlideConfig, PageSlides, SlideParallaxType } from 'react-page-slides'
 import Text from 'components/atoms/Text'
 import strings from 'strings'
@@ -27,7 +27,7 @@ const selectImageSize = (): string => {
   }
 }
 
-const Slider: React.FunctionComponent = () => {
+const FullPageScroll: React.FunctionComponent = () => {
   const [image, setImage] = useState(selectImageSize())
   const handleResize = (): void => setImage(selectImageSize())
 
@@ -103,4 +103,4 @@ const Slider: React.FunctionComponent = () => {
   )
 }
 
-export default Slider
+export default FullPageScroll
