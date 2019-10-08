@@ -4,10 +4,10 @@ import { CubeSpinner } from 'react-spinners-kit'
 import { CssBaseline } from '@material-ui/core'
 import Slider from './components/molecules/FullPageScroll'
 import NavBar from './components/molecules/NavBar'
-import LoginBox from 'components/LoginBox'
 
 const IndexScreen = lazy(() => import('./screens/IndexScreen/IndexScreen'))
 const AboutScreen = lazy(() => import('./screens/AboutScreen/AboutScreen'))
+const LoginScreen = lazy(() => import('./screens/LoginScreen/LoginScreen'))
 
 const App: React.FunctionComponent = () => {
   return (
@@ -24,8 +24,8 @@ const App: React.FunctionComponent = () => {
         <Route path="/about">
           <AboutScreen />
         </Route>
-        <Route path="/login">
-          <LoginBox />
+        <Route exact path="/login">
+          <LoginScreen />
         </Route>
       </Switch>
     </Suspense>
