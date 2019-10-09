@@ -5,6 +5,7 @@ const sv = {
   FULL_NAME: 'Full name',
   EMAIL: 'Email',
   USERNAME: 'User name',
+  CONFIRMATION_CODE: 'Confirmation code',
   PASSWORD: 'Password',
   PASSWORD_CONFIRM: 'Confirm password',
   FORGOT_PASSWORD: 'Forgot your password?',

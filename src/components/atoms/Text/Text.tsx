@@ -18,6 +18,7 @@ interface Props {
   white?: boolean
   noMargin?: boolean
   underline?: boolean
+  onClick?: () => void
 }
 
 const Text: React.FunctionComponent<Props> = ({
@@ -37,6 +38,7 @@ const Text: React.FunctionComponent<Props> = ({
   white,
   noMargin,
   underline,
+  onClick,
 }) => {
   const classNames: string = cx(styles.text, {
     [styles.textSmall]: small,
@@ -55,9 +57,13 @@ const Text: React.FunctionComponent<Props> = ({
     [styles.textUnderline]: underline,
   })
   return inline ? (
-    <span className={classNames}>{children}</span>
+    <span onClick={onClick} className={classNames}>
+      {children}
+    </span>
   ) : (
-    <p className={classNames}>{children}</p>
+    <p onClick={onClick} className={classNames}>
+      {children}
+    </p>
   )
 }
 

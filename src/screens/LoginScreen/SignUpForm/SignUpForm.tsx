@@ -3,10 +3,8 @@ import Avatar from '@material-ui/core/Avatar'
 import { Formik, Form, Field, FormikValues, FormikProps } from 'formik'
 import { TextField } from 'formik-material-ui'
 import { useMutation } from '@apollo/react-hooks'
-import Link from '@material-ui/core/Link'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { KeyboardDatePicker } from '@material-ui/pickers'
-import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
 import * as Yup from 'yup'
@@ -19,13 +17,21 @@ import gql from 'graphql-tag'
 import moment from 'moment'
 import { useHistory } from 'react-router'
 
-const SIGNIN_USER = gql`
-  mutation SignInUser($username: String!, $password: String!) {
-    signIn(data: { username: $username, password: $password }) {
-      user {
-        token
+const REGISTER_USER = gql`
+  mutation RegisterUser(
+    $username: String!
+    $password: String!
+    $name: String!
+    $birthdate: String!
+  ) {
+    register(
+      data: {
+        username: $username
+        password: $password
+        name: $name
+        birthdate: $birthdate
       }
-    }
+    )
   }
 `
 
@@ -100,7 +106,7 @@ interface FormValues {
 
 const SignUpForm: React.FunctionComponent<Props> = ({ onClick }) => {
   const classes = useStyles()
-  const [signInUser] = useMutation(SIGNIN_USER)
+  const [registerUser] = useMutation(REGISTER_USER)
   const history = useHistory()
   const initialValues = {
     fullName: '',
@@ -117,9 +123,14 @@ const SignUpForm: React.FunctionComponent<Props> = ({ onClick }) => {
   ): Promise<any> => {
     try {
       console.log(values)
-      // signInUser({
-      //   variables: { username: values.email, password: values.password },
-      // })
+      registerUser({
+        variables: {
+          name: values.fullName,
+          username: values.email,
+          password: values.password,
+          dateofbirth: values.dateofbirth,
+        },
+      })
       setSubmitting(false)
     } catch (e) {
       console.log(e)
