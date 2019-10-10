@@ -1,13 +1,33 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
+import { ApolloProvider } from '@apollo/react-hooks'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import ReactDOM from 'react-dom'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
+import ApolloClient from 'apollo-boost'
+import MomentUtils from '@date-io/moment'
+
+const client = new ApolloClient({
+  uri: 'http://localhost:3001/graphql',
+  request: operation => {
+    const token = localStorage.getItem('operativeToken')
+    operation.setContext({
+      headers: {
+        authorization: token ? `Bearer ${token}` : '',
+      },
+    })
+  },
+})
 
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <ApolloProvider client={client}>
+    <BrowserRouter>
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <App />
+      </MuiPickersUtilsProvider>
+    </BrowserRouter>
+  </ApolloProvider>,
   document.getElementById('root'),
 )
 

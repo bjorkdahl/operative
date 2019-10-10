@@ -22,6 +22,11 @@ const NavBar: React.FunctionComponent = () => {
             About
           </Text>
         </NavLink>
+        <NavLink to="/login">
+          <Text white large>
+            Log in / Sign up
+          </Text>
+        </NavLink>
       </div>
     </div>
   )

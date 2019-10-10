@@ -6,7 +6,7 @@ h1 {
 
 .heading {
     font-family: Roboto;
-    color: $primaryColor;
+    color: $colorPrimary;
     letter-spacing: 1px;
 }
 
@@ -23,7 +23,7 @@ h1 {
 }
 
 .headingWarning {
-    color: $warningColor;
+    color: red;
 }
 
 .headingEllipsis {

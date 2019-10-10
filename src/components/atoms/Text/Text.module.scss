@@ -2,7 +2,7 @@
 
 .text {
     font-family: Roboto;
-    color: $primaryColor;
+    color: $colorPrimary;
     letter-spacing: 1px;
 }
 
@@ -35,7 +35,7 @@
 }
 
 .textWarning {
-    color: $warningColor;
+    color: red;
 }
 
 .textEllipsis {
