@@ -11,7 +11,7 @@ import MomentUtils from '@date-io/moment'
 const client = new ApolloClient({
   uri: 'http://localhost:3001/graphql',
   request: operation => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('operativeToken')
     operation.setContext({
       headers: {
         authorization: token ? `Bearer ${token}` : '',

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import ConfirmationForm from '../ConfirmationForm'
 import { Formik, Form, Field, FormikValues } from 'formik'
@@ -18,6 +18,7 @@ import Text from 'components/atoms/Text'
 import strings from 'strings'
 import colors from 'strings/colors'
 import gql from 'graphql-tag'
+import ReactDOM from 'react-dom'
 
 const SIGNIN_USER = gql`
   mutation SignInUser($username: String!, $password: String!) {
@@ -95,6 +96,10 @@ interface Props {
   onClick: () => void
 }
 
+interface User {
+  token: string
+}
+
 const SignInForm: React.FunctionComponent<Props> = ({ onClick }) => {
   const [signInUser] = useMutation(SIGNIN_USER)
   const [open, setOpen] = useState(false)
@@ -106,6 +111,11 @@ const SignInForm: React.FunctionComponent<Props> = ({ onClick }) => {
   const handleNeedsConfirmation = (): void => {}
   const handleInvalidCredentials = (): void => {}
   const handleUserDisabled = (): void => {}
+  const handleAuthenticated = (user: User): void => {
+    localStorage.setItem('operativeToken', user.token)
+    console.log('LOGGED IN')
+    ReactDOM.createPortal(<p>hej</p>, document.body)
+  }
 
   const onSubmit = async (
     values: FormikValues,
@@ -121,14 +131,16 @@ const SignInForm: React.FunctionComponent<Props> = ({ onClick }) => {
         variables: { username: values.email, password: values.password },
       })
 
-      const handler = {
+      const handler: any = {
         invalidUsername: handleInvalidUsername,
         needsConfirmation: handleNeedsConfirmation,
         invalidCredentials: handleInvalidCredentials,
         userDisabled: handleUserDisabled,
       }
-      // @ts-ignore
-      handler[errorCode]()
+
+      errorCode
+        ? handler[errorCode]()
+        : authenticated && handleAuthenticated(user)
 
       setSubmitting(false)
     } catch (e) {
