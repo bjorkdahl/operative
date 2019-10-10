@@ -22,14 +22,14 @@ const REGISTER_USER = gql`
     $username: String!
     $password: String!
     $name: String!
-    $birthdate: String!
+    $dateofbirth: String!
   ) {
     register(
       data: {
         username: $username
         password: $password
         name: $name
-        birthdate: $birthdate
+        birthdate: $dateofbirth
       }
     )
   }
@@ -43,7 +43,7 @@ const SignupSchema = Yup.object({
     .email('Invalid email')
     .required('Required'),
   password: Yup.string()
-    .min(2, 'Too Short!')
+    .min(8, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
   passwordConfirmation: Yup.string()
@@ -114,7 +114,7 @@ const SignUpForm: React.FunctionComponent<Props> = ({ onClick }) => {
     passwordConfirmation: '',
     dateofbirth: moment()
       .subtract({ years: 30 })
-      .format(),
+      .format('YYYY-MM-DD'),
     email: '',
   }
   const onSubmit = async (
@@ -192,13 +192,11 @@ const SignUpForm: React.FunctionComponent<Props> = ({ onClick }) => {
                 placeholder={values.dateofbirth}
                 value={values.dateofbirth}
                 onChange={(date): void =>
-                  date !== null
-                    ? props.setFieldValue(
-                        'dateofbirth',
-                        date.format('YYYY-MM-DD'),
-                        true,
-                      )
-                    : props.setFieldValue('dateofbirth', date, false)
+                  props.setFieldValue(
+                    'dateofbirth',
+                    date ? date.format('YYYY-MM-DD') : null,
+                    true,
+                  )
                 }
                 format="YYYY/MM/DD"
               />

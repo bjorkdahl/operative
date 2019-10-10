@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import Avatar from '@material-ui/core/Avatar'
-import _pickBy from 'lodash/pickBy'
-import _keys from 'lodash/keys'
 import ConfirmationForm from '../ConfirmationForm'
 import { Formik, Form, Field, FormikValues } from 'formik'
 import { TextField } from 'formik-material-ui'
@@ -99,29 +97,39 @@ interface Props {
 
 const SignInForm: React.FunctionComponent<Props> = ({ onClick }) => {
   const [signInUser] = useMutation(SIGNIN_USER)
-  const [errors, setErrors] = useState()
   const [open, setOpen] = useState(false)
   const [user, setUser] = useState('')
   const classes = useStyles()
   const toggleModal = (): void => setOpen(!open)
 
-  useEffect(() => errors && toggleModal(), [errors])
+  const handleInvalidUsername = (): void => {}
+  const handleNeedsConfirmation = (): void => {}
+  const handleInvalidCredentials = (): void => {}
+  const handleUserDisabled = (): void => {}
 
   const onSubmit = async (
     values: FormikValues,
     { setSubmitting }: any,
-  ): Promise<any> => {
+  ): Promise<void> => {
     setUser(values.email)
     try {
       const {
         data: {
-          signIn: { authenticated, user, ...rest },
+          signIn: { authenticated, user, errorCode },
         },
       } = await signInUser({
         variables: { username: values.email, password: values.password },
       })
-      const error = _keys(_pickBy(rest))[0]
-      error ? setErrors(error) : console.log(authenticated, user)
+
+      const handler = {
+        invalidUsername: handleInvalidUsername,
+        needsConfirmation: handleNeedsConfirmation,
+        invalidCredentials: handleInvalidCredentials,
+        userDisabled: handleUserDisabled,
+      }
+      // @ts-ignore
+      handler[errorCode]()
+
       setSubmitting(false)
     } catch (e) {
       console.log(e)
@@ -147,7 +155,7 @@ const SignInForm: React.FunctionComponent<Props> = ({ onClick }) => {
             <Field
               className={classes.field}
               component={TextField}
-              label={strings.get('USERNAME')}
+              label={strings.get('EMAIL')}
               name="email"
               type="email"
             />
