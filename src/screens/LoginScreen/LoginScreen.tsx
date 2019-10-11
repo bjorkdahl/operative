@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useContext } from 'react'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
 import colors from 'strings/colors'
@@ -6,6 +6,7 @@ import colors from 'strings/colors'
 import { useTransition, animated } from 'react-spring'
 import SignInForm from './SignInForm/SignInForm'
 import SignUpForm from './SignUpForm/SignUpForm'
+import { ModalContextInstance } from '../../'
 
 const useStyles = makeStyles({
   box: {
@@ -35,6 +36,11 @@ const LoginScreen: React.FunctionComponent = () => {
       opacity: 0,
       transform: 'translate3d(-100%,0,0)',
     },
+  })
+
+  const modalContext = useContext(ModalContextInstance)
+  React.useEffect(() => {
+    modalContext.openModal('hello')
   })
 
   const pages = [

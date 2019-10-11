@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
@@ -7,6 +7,45 @@ import App from './App'
 import * as serviceWorker from './serviceWorker'
 import ApolloClient from 'apollo-boost'
 import MomentUtils from '@date-io/moment'
+
+interface ModalContext {
+  modal: string
+  openModal: {(args: any): void}
+  isOpen: boolean
+}
+
+interface ModalState {
+  modal: string
+  isOpen: boolean
+}
+
+export const ModalContextInstance = React.createContext<ModalContext>({ modal: '', openModal: () => {}, isOpen: false })
+
+const ModalProvider:React.FunctionComponent<{}> = ({ children }) => {
+  const [state, setState] = useState<ModalState>({
+    modal: '',
+    isOpen: false
+  })
+
+  const openModal = (title: string) => {
+    if (state.isOpen) {
+      return
+    }
+    setState({...state, isOpen: true, modal: title })
+  }
+
+  const modalValues: ModalContext = {
+    modal: state.modal,
+    isOpen: state.isOpen,
+    openModal,
+  }
+
+  return (
+    <ModalContextInstance.Provider value={modalValues}>
+      {children}
+    </ModalContextInstance.Provider>
+  )
+}
 
 const client = new ApolloClient({
   uri: 'http://localhost:3001/graphql',
@@ -21,13 +60,15 @@ const client = new ApolloClient({
 })
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <BrowserRouter>
-      <MuiPickersUtilsProvider utils={MomentUtils}>
-        <App />
-      </MuiPickersUtilsProvider>
-    </BrowserRouter>
-  </ApolloProvider>,
+  <ModalProvider>
+    <ApolloProvider client={client}>
+      <BrowserRouter>
+        <MuiPickersUtilsProvider utils={MomentUtils}>
+          <App />
+        </MuiPickersUtilsProvider>
+      </BrowserRouter>
+    </ApolloProvider>
+  </ModalProvider>,
   document.getElementById('root'),
 )
 
