@@ -1,24 +1,26 @@
-import React, { useState } from 'react'
-import Avatar from '@material-ui/core/Avatar'
-import ConfirmationForm from '../ConfirmationForm'
-import { Formik, Form, Field, FormikValues } from 'formik'
-import { TextField } from 'formik-material-ui'
 import { useMutation } from '@apollo/react-hooks'
-import Link from '@material-ui/core/Link'
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
-import Grid from '@material-ui/core/Grid'
-import Modal from '@material-ui/core/Modal'
-import Backdrop from '@material-ui/core/Backdrop'
-import Fade from '@material-ui/core/Fade'
-import Button from '@material-ui/core/Button'
+import {
+  Avatar,
+  Backdrop,
+  Button,
+  Fade,
+  Grid,
+  Link,
+  Modal,
+} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import * as Yup from 'yup'
-import Heading from 'components/atoms/Heading/Heading'
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import Heading from 'components/atoms/Heading'
 import Text from 'components/atoms/Text'
+import { ModalContextInstance } from 'Contexts/Modal'
+import { Field, Form, Formik, FormikValues } from 'formik'
+import { TextField } from 'formik-material-ui'
+import gql from 'graphql-tag'
+import React, { useContext, useEffect, useState } from 'react'
 import strings from 'strings'
 import colors from 'strings/colors'
-import gql from 'graphql-tag'
-import ReactDOM from 'react-dom'
+import * as Yup from 'yup'
+import ConfirmationForm from '../ConfirmationForm'
 
 const SIGNIN_USER = gql`
   mutation SignInUser($username: String!, $password: String!) {
@@ -104,8 +106,9 @@ const SignInForm: React.FunctionComponent<Props> = ({ onClick }) => {
   const [signInUser] = useMutation(SIGNIN_USER)
   const [open, setOpen] = useState(false)
   const [user, setUser] = useState('')
-  const classes = useStyles()
   const toggleModal = (): void => setOpen(!open)
+  const modalContext = useContext(ModalContextInstance)
+  const classes = useStyles()
 
   const handleInvalidUsername = (): void => {}
   const handleNeedsConfirmation = (): void => {}
@@ -114,8 +117,11 @@ const SignInForm: React.FunctionComponent<Props> = ({ onClick }) => {
   const handleAuthenticated = (user: User): void => {
     localStorage.setItem('operativeToken', user.token)
     console.log('LOGGED IN')
-    ReactDOM.createPortal(<p>hej</p>, document.body)
   }
+
+  useEffect(() => {
+    modalContext.openModal('hello')
+  })
 
   const onSubmit = async (
     values: FormikValues,
