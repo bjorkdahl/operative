@@ -1,4 +1,5 @@
 import { CssBaseline } from '@material-ui/core'
+import Modal from 'components/Modal'
 import { ModalContextInstance } from 'Contexts/Modal'
 import React, { lazy, Suspense, useContext } from 'react'
 import { Route, Switch } from 'react-router-dom'
@@ -31,7 +32,7 @@ const App: React.FunctionComponent = () => {
           <LoginScreen />
         </Route>
       </Switch>
-      {modal.isOpen && <div>{modal.modal}</div>}
+      {modal.isOpen && <Modal isOpen={modal.isOpen}>{modal.component}</Modal>}
     </Suspense>
   )
 }

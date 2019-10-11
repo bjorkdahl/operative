@@ -1,37 +1,37 @@
 import React, { useState } from 'react'
 
 interface ModalContext {
-  modal: string
+  component?: React.FunctionComponent
   openModal: { (args: any): void }
   isOpen: boolean
 }
 
 interface ModalState {
-  modal: string
+  component?: React.FunctionComponent
   isOpen: boolean
 }
 
 export const ModalContextInstance = React.createContext<ModalContext>({
-  modal: '',
+  component: undefined,
   openModal: () => {},
   isOpen: false,
 })
 
 const ModalProvider: React.FunctionComponent<{}> = ({ children }) => {
   const [state, setState] = useState<ModalState>({
-    modal: '',
+    component: undefined,
     isOpen: false,
   })
 
-  const openModal = (title: string) => {
+  const openModal = (component: React.FunctionComponent) => {
     if (state.isOpen) {
       return
     }
-    setState({ ...state, isOpen: true, modal: title })
+    setState({ ...state, isOpen: true, component: component })
   }
 
   const modalValues: ModalContext = {
-    modal: state.modal,
+    component: state.component,
     isOpen: state.isOpen,
     openModal,
   }
