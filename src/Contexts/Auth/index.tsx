@@ -1,1 +1,1 @@
-export { default, AuthContextInstance } from './AuthProvider'
+export { default, AuthContextInstance, ProtectedRoute } from './AuthProvider'

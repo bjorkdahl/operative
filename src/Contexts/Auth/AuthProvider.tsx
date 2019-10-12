@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { Redirect, Route } from 'react-router'
 
 interface ModalContext {
   authenticated: boolean
@@ -12,6 +13,24 @@ interface ModalState {
   authenticated: boolean
   token: string
   username: string
+}
+
+interface RouteProps {
+  exact?: boolean
+  path?: string
+}
+
+export const ProtectedRoute: React.FunctionComponent<RouteProps> = ({
+  children,
+  exact,
+  path,
+}) => {
+  const authContent = useContext(AuthContextInstance)
+  return (
+    <Route exact={exact} path={path}>
+      {authContent.authenticated ? children : <Redirect to="/login" />}
+    </Route>
+  )
 }
 
 export const AuthContextInstance = React.createContext<ModalContext>({

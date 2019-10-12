@@ -6,7 +6,7 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import { CubeSpinner } from 'react-spinners-kit'
 import Slider from './components/molecules/FullPageScroll'
 import NavBar from './components/molecules/NavBar'
-import { AuthContextInstance } from './Contexts/Auth/'
+import { ProtectedRoute } from './Contexts/Auth/'
 
 const IndexScreen = lazy(() => import('./screens/IndexScreen/IndexScreen'))
 const AboutScreen = lazy(() => import('./screens/AboutScreen/AboutScreen'))
@@ -17,7 +17,6 @@ const ProfileScreen = lazy(() =>
 
 const App: React.FunctionComponent = () => {
   const modalContext = useContext(ModalContextInstance)
-  const authContent = useContext(AuthContextInstance)
 
   return (
     <Suspense fallback={<CubeSpinner />}>
@@ -36,11 +35,9 @@ const App: React.FunctionComponent = () => {
         <Route exact path="/login">
           <LoginScreen />
         </Route>
-        {authContent.authenticated && (
-          <Route exact path="/profile/:id">
-            <ProfileScreen />
-          </Route>
-        )}
+        <ProtectedRoute exact path="/profile/:id">
+          <ProfileScreen />
+        </ProtectedRoute>
         <Redirect to="/login" />
       </Switch>
       {modalContext.isOpen && (
