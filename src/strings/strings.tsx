@@ -10,6 +10,8 @@ const sv = {
   PASSWORD_CONFIRM: 'Confirm password',
   FORGOT_PASSWORD: 'Forgot your password?',
   SIGN_UP: 'Sign up!',
+  LOG_OUT: 'Log out',
+  CONNECT_STRAVA: 'Connect your Strava account',
   LOG_IN: 'Log in!',
   TAGLINE: 'Datadriven hälsoanalys',
   TAGLINE_DESC:

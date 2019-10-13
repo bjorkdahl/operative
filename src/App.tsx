@@ -7,6 +7,7 @@ import { CubeSpinner } from 'react-spinners-kit'
 import Slider from './components/molecules/FullPageScroll'
 import NavBar from './components/molecules/NavBar'
 import { ProtectedRoute } from './Contexts/Auth/'
+import Strava from 'api/strava'
 
 const IndexScreen = lazy(() => import('./screens/IndexScreen/IndexScreen'))
 const AboutScreen = lazy(() => import('./screens/AboutScreen/AboutScreen'))
@@ -38,6 +39,12 @@ const App: React.FunctionComponent = () => {
         <ProtectedRoute exact path="/profile/:id">
           <ProfileScreen />
         </ProtectedRoute>
+        <Route path="/connect/strava/auth/">
+          <Strava />
+        </Route>
+        <Route path="/connect/strava/success/">
+          <Strava success />
+        </Route>
         <Redirect to="/login" />
       </Switch>
       {modalContext.isOpen && (
