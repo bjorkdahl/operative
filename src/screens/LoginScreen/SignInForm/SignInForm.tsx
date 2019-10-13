@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Heading from 'components/atoms/Heading'
 import Text from 'components/atoms/Text'
+import { AuthContextInstance } from 'Contexts/Auth'
 import { ModalContextInstance } from 'Contexts/Modal'
 import { Field, Form, Formik, FormikValues } from 'formik'
 import { TextField } from 'formik-material-ui'
@@ -14,7 +15,6 @@ import strings from 'strings'
 import colors from 'strings/colors'
 import * as Yup from 'yup'
 import ConfirmationForm from '../ConfirmationForm'
-import { AuthContextInstance } from 'Contexts/Auth'
 
 const SIGNIN_USER = gql`
   mutation SignInUser($username: String!, $password: String!) {
@@ -111,9 +111,9 @@ const SignInForm: React.FunctionComponent<Props> = ({ onClick }) => {
     )
   }
 
-  const handleUserAlreadyExists = (): void => {
+  const handleUserDisabled = (): void => {
     modalContext.openModal(
-      <Text>There is already an account registered with this email.</Text>,
+      <Text>Looks like your account has been disabled.</Text>,
     )
   }
 
@@ -139,7 +139,7 @@ const SignInForm: React.FunctionComponent<Props> = ({ onClick }) => {
         UserNotConfirmedException: handleNeedsConfirmation,
         NotAuthorizedException: handleInvalidCredentials,
         UserNotFoundException: handleUserNotFound,
-        UsernameExistsException: handleUserAlreadyExists,
+        DisabledUserException: handleUserDisabled,
       }
 
       errorCode

@@ -67,7 +67,7 @@ const ConfirmationForm: React.FunctionComponent<Props> = ({ user }) => {
       } = await confirmRegistration({
         variables: { username: user, code: values.code },
       })
-      id && history.push(`/profile${id}`)
+      id && history.push('/login')
     } catch (e) {
       console.log(e)
     }

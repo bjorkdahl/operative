@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { Redirect, Route } from 'react-router'
 
-interface ModalContext {
+interface AuthContext {
   authenticated: boolean
   signIn: { (auth: boolean, username: string, token: string): void }
   signOut: { (): void }
@@ -9,7 +9,7 @@ interface ModalContext {
   username: string
 }
 
-interface ModalState {
+interface AuthState {
   authenticated: boolean
   token: string
   username: string
@@ -33,7 +33,7 @@ export const ProtectedRoute: React.FunctionComponent<RouteProps> = ({
   )
 }
 
-export const AuthContextInstance = React.createContext<ModalContext>({
+export const AuthContextInstance = React.createContext<AuthContext>({
   authenticated: false,
   signIn: () => {},
   signOut: () => {},
@@ -42,7 +42,7 @@ export const AuthContextInstance = React.createContext<ModalContext>({
 })
 
 const AuthProvider: React.FunctionComponent<{}> = ({ children }) => {
-  const [state, setState] = useState<ModalState>({
+  const [state, setState] = useState<AuthState>({
     authenticated: false,
     username: '',
     token: '',
@@ -68,7 +68,7 @@ const AuthProvider: React.FunctionComponent<{}> = ({ children }) => {
       return
     }
 
-    localStorage.clear()
+    localStorage.removeItem('operativeToken')
 
     setState({
       authenticated: false,
@@ -77,7 +77,7 @@ const AuthProvider: React.FunctionComponent<{}> = ({ children }) => {
     })
   }
 
-  const modalValues: ModalContext = {
+  const modalValues: AuthContext = {
     authenticated: state.authenticated,
     username: state.username,
     token: state.token,
