@@ -7,6 +7,7 @@ import App from './App'
 import * as serviceWorker from './serviceWorker'
 import ApolloClient from 'apollo-boost'
 import MomentUtils from '@date-io/moment'
+import ModalProvider from 'Contexts/Modal'
 
 const client = new ApolloClient({
   uri: 'http://localhost:3001/graphql',
@@ -21,13 +22,15 @@ const client = new ApolloClient({
 })
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <BrowserRouter>
-      <MuiPickersUtilsProvider utils={MomentUtils}>
-        <App />
-      </MuiPickersUtilsProvider>
-    </BrowserRouter>
-  </ApolloProvider>,
+  <ModalProvider>
+    <ApolloProvider client={client}>
+      <BrowserRouter>
+        <MuiPickersUtilsProvider utils={MomentUtils}>
+          <App />
+        </MuiPickersUtilsProvider>
+      </BrowserRouter>
+    </ApolloProvider>
+  </ModalProvider>,
   document.getElementById('root'),
 )
 

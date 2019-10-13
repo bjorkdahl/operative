@@ -1,9 +1,8 @@
-import React, { useState, useCallback } from 'react'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
+import React, { useCallback, useState } from 'react'
+import { animated, useTransition } from 'react-spring'
 import colors from 'strings/colors'
-
-import { useTransition, animated } from 'react-spring'
 import SignInForm from './SignInForm/SignInForm'
 import SignUpForm from './SignUpForm/SignUpForm'
 

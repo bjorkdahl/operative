@@ -1,33 +1,24 @@
-import React, { useState } from 'react'
-import Avatar from '@material-ui/core/Avatar'
-import ConfirmationForm from '../ConfirmationForm'
-import { Formik, Form, Field, FormikValues } from 'formik'
-import { TextField } from 'formik-material-ui'
 import { useMutation } from '@apollo/react-hooks'
-import Link from '@material-ui/core/Link'
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
-import Grid from '@material-ui/core/Grid'
-import Modal from '@material-ui/core/Modal'
-import Backdrop from '@material-ui/core/Backdrop'
-import Fade from '@material-ui/core/Fade'
-import Button from '@material-ui/core/Button'
+import { Avatar, Button, Grid, Link } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import * as Yup from 'yup'
-import Heading from 'components/atoms/Heading/Heading'
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import Heading from 'components/atoms/Heading'
 import Text from 'components/atoms/Text'
+import { ModalContextInstance } from 'Contexts/Modal'
+import { Field, Form, Formik, FormikValues } from 'formik'
+import { TextField } from 'formik-material-ui'
+import gql from 'graphql-tag'
+import React, { useContext, useState } from 'react'
 import strings from 'strings'
 import colors from 'strings/colors'
-import gql from 'graphql-tag'
-import ReactDOM from 'react-dom'
+import * as Yup from 'yup'
+import ConfirmationForm from '../ConfirmationForm'
 
 const SIGNIN_USER = gql`
   mutation SignInUser($username: String!, $password: String!) {
     signIn(data: { username: $username, password: $password }) {
       authenticated
-      invalidCredentials
-      userDisabled
-      needsConfirmation
-      invalidUsername
+      errorCode
       user {
         token
       }
@@ -79,15 +70,6 @@ const useStyles = makeStyles({
   options: {
     marginRight: '20px',
   },
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  modalContainer: {
-    padding: '40px',
-    backgroundColor: colors.colorWhite,
-  },
 })
 
 const initialValues = { email: '', password: '' }
@@ -102,19 +84,38 @@ interface User {
 
 const SignInForm: React.FunctionComponent<Props> = ({ onClick }) => {
   const [signInUser] = useMutation(SIGNIN_USER)
-  const [open, setOpen] = useState(false)
   const [user, setUser] = useState('')
+  const modalContext = useContext(ModalContextInstance)
   const classes = useStyles()
-  const toggleModal = (): void => setOpen(!open)
 
-  const handleInvalidUsername = (): void => {}
-  const handleNeedsConfirmation = (): void => {}
-  const handleInvalidCredentials = (): void => {}
-  const handleUserDisabled = (): void => {}
+  const handleInvalidUsername = (): void => {
+    modalContext.openModal(
+      <Text large>
+        Seems your username is invalid, please contact support!
+      </Text>,
+    )
+  }
+  const handleUserNotFound = (): void => {
+    modalContext.openModal(
+      <Text>Could not find any users with that email!</Text>,
+    )
+  }
+  const handleNeedsConfirmation = (): void => {
+    modalContext.openModal(<ConfirmationForm user={user} />)
+  }
+  const handleInvalidCredentials = (): void => {
+    modalContext.openModal(
+      <Text>Invalid email and/or password, please try again!</Text>,
+    )
+  }
+  const handleUserDisabled = (): void => {
+    modalContext.openModal(
+      <Text>You&apos;re account has been disabled. Sorry!</Text>,
+    )
+  }
   const handleAuthenticated = (user: User): void => {
     localStorage.setItem('operativeToken', user.token)
-    console.log('LOGGED IN')
-    ReactDOM.createPortal(<p>hej</p>, document.body)
+    modalContext.openModal(<Text>You are logged in!</Text>)
   }
 
   const onSubmit = async (
@@ -136,6 +137,7 @@ const SignInForm: React.FunctionComponent<Props> = ({ onClick }) => {
         needsConfirmation: handleNeedsConfirmation,
         invalidCredentials: handleInvalidCredentials,
         userDisabled: handleUserDisabled,
+        UserNotFoundException: handleUserNotFound,
       }
 
       errorCode
@@ -201,31 +203,6 @@ const SignInForm: React.FunctionComponent<Props> = ({ onClick }) => {
           </Link>
         </Grid>
       </Grid>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={classes.modal}
-        open={open}
-        onClose={toggleModal}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={open}>
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            md={4}
-            lg={4}
-            className={classes.modalContainer}
-          >
-            <ConfirmationForm user={user} />
-          </Grid>
-        </Fade>
-      </Modal>
     </div>
   )
 }

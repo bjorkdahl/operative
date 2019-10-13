@@ -1,6 +1,6 @@
+import Text from 'components/atoms/Text'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import Text from 'components/atoms/Text'
 import styles from './NavBar.module.scss'
 
 const NavBar: React.FunctionComponent = () => {
