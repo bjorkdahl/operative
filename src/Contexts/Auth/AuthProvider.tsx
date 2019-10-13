@@ -33,8 +33,13 @@ export const ProtectedRoute: React.FunctionComponent<RouteProps> = ({
   )
 }
 
+const checkAuth = (): boolean => {
+  const token = localStorage.getItem('operativeToken')
+  return token !== null && true
+}
+
 export const AuthContextInstance = React.createContext<AuthContext>({
-  authenticated: false,
+  authenticated: checkAuth(),
   signIn: () => {},
   signOut: () => {},
   token: '',
@@ -43,7 +48,7 @@ export const AuthContextInstance = React.createContext<AuthContext>({
 
 const AuthProvider: React.FunctionComponent<{}> = ({ children }) => {
   const [state, setState] = useState<AuthState>({
-    authenticated: false,
+    authenticated: checkAuth(),
     username: '',
     token: '',
   })
