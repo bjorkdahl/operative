@@ -2,17 +2,21 @@ import { CssBaseline } from '@material-ui/core'
 import Modal from 'components/Modal'
 import { ModalContextInstance } from 'Contexts/Modal'
 import React, { lazy, Suspense, useContext } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import { CubeSpinner } from 'react-spinners-kit'
 import Slider from './components/molecules/FullPageScroll'
 import NavBar from './components/molecules/NavBar'
+import { ProtectedRoute } from './Contexts/Auth/'
 
 const IndexScreen = lazy(() => import('./screens/IndexScreen/IndexScreen'))
 const AboutScreen = lazy(() => import('./screens/AboutScreen/AboutScreen'))
 const LoginScreen = lazy(() => import('./screens/LoginScreen/LoginScreen'))
+const ProfileScreen = lazy(() =>
+  import('./screens/ProfileScreen/ProfileScreen'),
+)
 
 const App: React.FunctionComponent = () => {
-  const modal = useContext(ModalContextInstance)
+  const modalContext = useContext(ModalContextInstance)
 
   return (
     <Suspense fallback={<CubeSpinner />}>
@@ -31,8 +35,14 @@ const App: React.FunctionComponent = () => {
         <Route exact path="/login">
           <LoginScreen />
         </Route>
+        <ProtectedRoute exact path="/profile/:id">
+          <ProfileScreen />
+        </ProtectedRoute>
+        <Redirect to="/login" />
       </Switch>
-      {modal.isOpen && <Modal isOpen={modal.isOpen}>{modal.component}</Modal>}
+      {modalContext.isOpen && (
+        <Modal isOpen={modalContext.isOpen}>{modalContext.component}</Modal>
+      )}
     </Suspense>
   )
 }

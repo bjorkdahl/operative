@@ -4,11 +4,13 @@ import { makeStyles } from '@material-ui/core/styles'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Heading from 'components/atoms/Heading'
 import Text from 'components/atoms/Text'
+import { AuthContextInstance } from 'Contexts/Auth'
 import { ModalContextInstance } from 'Contexts/Modal'
 import { Field, Form, Formik, FormikValues } from 'formik'
 import { TextField } from 'formik-material-ui'
 import gql from 'graphql-tag'
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
+import { useHistory } from 'react-router'
 import strings from 'strings'
 import colors from 'strings/colors'
 import * as Yup from 'yup'
@@ -20,7 +22,9 @@ const SIGNIN_USER = gql`
       authenticated
       errorCode
       user {
+        id
         token
+        username
       }
     }
   }
@@ -80,49 +84,48 @@ interface Props {
 
 interface User {
   token: string
+  username: string
+  id: number
 }
 
 const SignInForm: React.FunctionComponent<Props> = ({ onClick }) => {
   const [signInUser] = useMutation(SIGNIN_USER)
-  const [user, setUser] = useState('')
+  const history = useHistory()
   const modalContext = useContext(ModalContextInstance)
+  const authContext = useContext(AuthContextInstance)
   const classes = useStyles()
 
-  const handleInvalidUsername = (): void => {
-    modalContext.openModal(
-      <Text large>
-        Seems your username is invalid, please contact support!
-      </Text>,
-    )
-  }
   const handleUserNotFound = (): void => {
     modalContext.openModal(
       <Text>Could not find any users with that email!</Text>,
     )
   }
-  const handleNeedsConfirmation = (): void => {
-    modalContext.openModal(<ConfirmationForm user={user} />)
+
+  const handleNeedsConfirmation = (email: string): void => {
+    modalContext.openModal(<ConfirmationForm user={email} />)
   }
+
   const handleInvalidCredentials = (): void => {
     modalContext.openModal(
       <Text>Invalid email and/or password, please try again!</Text>,
     )
   }
+
   const handleUserDisabled = (): void => {
     modalContext.openModal(
-      <Text>You&apos;re account has been disabled. Sorry!</Text>,
+      <Text>Looks like your account has been disabled.</Text>,
     )
   }
+
   const handleAuthenticated = (user: User): void => {
-    localStorage.setItem('operativeToken', user.token)
-    modalContext.openModal(<Text>You are logged in!</Text>)
+    authContext.signIn(true, user.username, user.token)
+    history.push(`profile/${user.id}`)
   }
 
   const onSubmit = async (
     values: FormikValues,
     { setSubmitting }: any,
   ): Promise<void> => {
-    setUser(values.email)
     try {
       const {
         data: {
@@ -133,15 +136,14 @@ const SignInForm: React.FunctionComponent<Props> = ({ onClick }) => {
       })
 
       const handler: any = {
-        invalidUsername: handleInvalidUsername,
-        needsConfirmation: handleNeedsConfirmation,
-        invalidCredentials: handleInvalidCredentials,
-        userDisabled: handleUserDisabled,
+        UserNotConfirmedException: handleNeedsConfirmation,
+        NotAuthorizedException: handleInvalidCredentials,
         UserNotFoundException: handleUserNotFound,
+        DisabledUserException: handleUserDisabled,
       }
 
       errorCode
-        ? handler[errorCode]()
+        ? handler[errorCode](values.email)
         : authenticated && handleAuthenticated(user)
 
       setSubmitting(false)

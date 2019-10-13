@@ -1,21 +1,21 @@
-import React from 'react'
-import Avatar from '@material-ui/core/Avatar'
-import { Formik, Form, Field, FormikValues, FormikProps } from 'formik'
-import { TextField } from 'formik-material-ui'
 import { useMutation } from '@apollo/react-hooks'
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
-import { KeyboardDatePicker } from '@material-ui/pickers'
+import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
-import * as Yup from 'yup'
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import { KeyboardDatePicker } from '@material-ui/pickers'
 import Heading from 'components/atoms/Heading/Heading'
 import Text from 'components/atoms/Text'
-import strings from 'strings'
-import colors from 'strings/colors'
-
+import { ModalContextInstance } from 'Contexts/Modal'
+import { Field, Form, Formik, FormikProps, FormikValues } from 'formik'
+import { TextField } from 'formik-material-ui'
 import gql from 'graphql-tag'
 import moment from 'moment'
-import { useHistory } from 'react-router'
+import React, { useContext } from 'react'
+import strings from 'strings'
+import colors from 'strings/colors'
+import * as Yup from 'yup'
+import ConfirmationForm from './../ConfirmationForm/ConfirmationForm'
 
 const REGISTER_USER = gql`
   mutation RegisterUser(
@@ -104,10 +104,10 @@ interface FormValues {
   email: string
 }
 
-const SignUpForm: React.FunctionComponent<Props> = ({ onClick }) => {
+const SignUpForm: React.FunctionComponent<Props> = () => {
   const classes = useStyles()
   const [registerUser] = useMutation(REGISTER_USER)
-  const history = useHistory()
+  const modalContext = useContext(ModalContextInstance)
   const initialValues = {
     fullName: '',
     password: '',
@@ -117,13 +117,21 @@ const SignUpForm: React.FunctionComponent<Props> = ({ onClick }) => {
       .format('YYYY-MM-DD'),
     email: '',
   }
+
+  const handleNeedsConfirmation = (email: string): void => {
+    modalContext.openModal(<ConfirmationForm user={email} />)
+  }
+
+  const handleSignUpError = (): void => {
+    modalContext.openModal(<Text>Woops! Something went wrong!</Text>)
+  }
+
   const onSubmit = async (
     values: FormikValues,
     { setSubmitting }: any,
   ): Promise<any> => {
     try {
-      console.log(values)
-      registerUser({
+      const success = await registerUser({
         variables: {
           name: values.fullName,
           username: values.email,
@@ -131,6 +139,9 @@ const SignUpForm: React.FunctionComponent<Props> = ({ onClick }) => {
           dateofbirth: values.dateofbirth,
         },
       })
+
+      success ? handleNeedsConfirmation(values.email) : handleSignUpError()
+
       setSubmitting(false)
     } catch (e) {
       console.log(e)
@@ -208,9 +219,6 @@ const SignUpForm: React.FunctionComponent<Props> = ({ onClick }) => {
                 disabled={props.isSubmitting}
               >
                 <Text bold>{strings.get('SUBMIT')}</Text>
-              </Button>
-              <Button size="small" onChange={(): void => history.push('/')}>
-                Back
               </Button>
             </Form>
           )

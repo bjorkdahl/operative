@@ -1,22 +1,21 @@
-import React, { useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
-import { Formik, Form, Field, FormikValues } from 'formik'
-import { TextField } from 'formik-material-ui'
-import colors from 'strings/colors'
-import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
+import { makeStyles } from '@material-ui/core/styles'
 import Heading from 'components/atoms/Heading/Heading'
 import Text from 'components/atoms/Text'
-import * as Yup from 'yup'
+import { Field, Form, Formik, FormikValues } from 'formik'
+import { TextField } from 'formik-material-ui'
 import gql from 'graphql-tag'
+import React, { useState } from 'react'
+import { useHistory } from 'react-router'
 import strings from 'strings'
+import colors from 'strings/colors'
+import * as Yup from 'yup'
 
 const CONFIRM_REGISTRATION = gql`
   mutation ConfirmRegistration($username: String!, $code: String!) {
     confirmRegistration(data: { username: $username, code: $code }) {
       id
-      username
-      token
     }
   }
 `
@@ -58,27 +57,26 @@ const ConfirmationForm: React.FunctionComponent<Props> = ({ user }) => {
   const [resendConfirmationCode] = useMutation(RESEND_CONFIRMATION_CODE)
   const [confirmRegistration] = useMutation(CONFIRM_REGISTRATION)
   const [message, setMessage] = useState('')
+  const history = useHistory()
   const classes = useStyles()
 
   const onSubmit = async (values: FormikValues): Promise<any> => {
     try {
       const {
-        data: { id, username, token },
+        data: { id },
       } = await confirmRegistration({
         variables: { username: user, code: values.code },
       })
-      console.log('id: ' + id + ' username: ' + username + ' token: ' + token)
-      await localStorage.set('operativeToken', token)
-      console.log(localStorage.get('operativeToken'))
+      id && history.push('/login')
     } catch (e) {
       console.log(e)
     }
   }
 
-  const onResendCode = async (values: FormikValues): Promise<any> => {
+  const onResendCode = async (): Promise<any> => {
     try {
       const response = await resendConfirmationCode({
-        variables: { username: user, code: values.code },
+        variables: { username: user },
       })
       response && setMessage('A new code has been sent to you!')
     } catch (e) {
