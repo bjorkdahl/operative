@@ -1,21 +1,24 @@
-import Text from 'components/atoms/Text'
 import React, { useContext } from 'react'
-import { useParams } from 'react-router'
+import { Route } from 'react-router'
 import { AuthContextInstance } from 'Contexts/Auth'
 import strings from 'strings'
+import Strava from 'api/strava'
 
 const ProfileScreen: React.FunctionComponent = () => {
-  const { id } = useParams()
   const authContext = useContext(AuthContextInstance)
-
   return (
     <div>
-      <Text>{id}</Text>
+      <Route path={`/profile/connect/strava/auth`}>
+        <Strava />
+      </Route>
+      <Route path={`/profile/connect/strava/success/`}>
+        <Strava success />
+      </Route>
       <button onClick={() => authContext.signOut()}>
         {strings.get('LOG_OUT')}
       </button>
-      <a href="/connect/strava/auth/">connect to strava</a>
-    </div>
+      <a href="/profile/connect/strava/auth">connect to strava</a>
+    </div >
   )
 }
 

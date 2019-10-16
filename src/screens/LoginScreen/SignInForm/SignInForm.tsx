@@ -119,7 +119,7 @@ const SignInForm: React.FunctionComponent<Props> = ({ onClick }) => {
 
   const handleAuthenticated = (user: User): void => {
     authContext.signIn(true, user.username, user.token)
-    history.push(`profile/${user.id}`)
+    history.push('/profile')
   }
 
   const onSubmit = async (
