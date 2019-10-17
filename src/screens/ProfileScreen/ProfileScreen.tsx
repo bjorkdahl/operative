@@ -3,6 +3,7 @@ import { AuthContextInstance } from 'actions/Auth'
 import strings from 'strings'
 import Strava from 'actions/Strava'
 import { useLocation } from 'react-router'
+import { Button } from '@material-ui/core'
 
 const ProfileScreen: React.FunctionComponent = () => {
   const authContext = useContext(AuthContextInstance)
@@ -12,10 +13,9 @@ const ProfileScreen: React.FunctionComponent = () => {
 
       <Strava baseRoute={pathname} />
 
-      <button onClick={() => authContext.signOut()}>
+      <Button onClick={() => authContext.signOut()}>
         {strings.get('LOG_OUT')}
-      </button>
-      <a href="/profile/connect/strava/auth">connect to strava</a>
+      </Button>
     </div >
   )
 }

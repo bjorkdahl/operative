@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useQuery, useMutation } from '@apollo/react-hooks'
+import { useLazyQuery, useQuery , useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import Text from 'components/atoms/Text'
 import * as params from 'react-route-params'
@@ -20,9 +20,7 @@ const SET_STRAVA_OAUTH_TOKEN = gql`
 `
 
 const StravaAuth: React.FunctionComponent = () => {
-  const { loading, error, data } = useQuery(GET_STRAVA_OAUTH_URL, {
-    variables: { callbackUrl: 'http://localhost:3000/profile/connect/strava/success/' },
-  })
+  
   if (loading) return <Text>Loading...</Text>
   if (error) return <Redirect to='/profile' />
   data && (window.location.href = data.getStravaOAuthUrl)
@@ -49,14 +47,37 @@ interface Props {
 
 
 const Strava: React.FunctionComponent<Props> = ({ baseRoute }) => {
-  console.log(baseRoute)
+  const onSubmit = async (
+    values: FormikValues,
+    { setSubmitting }: any,
+  ): Promise<void> => {
+    try {
+      const { loading, error, data } = useQuery(GET_STRAVA_OAUTH_URL, {
+    variables: { callbackUrl: 'http://localhost:3000/profile/connect/strava/success/' },
+  })
+
+      const handler: any = {
+        UserNotConfirmedException: handleNeedsConfirmation,
+        NotAuthorizedException: handleInvalidCredentials,
+        UserNotFoundException: handleUserNotFound,
+        DisabledUserException: handleUserDisabled,
+      }
+
+      console.log(errorCode)
+
+      errorCode
+        ? handler[errorCode](values.email)
+        : authenticated && handleAuthenticated(user)
+
+      setSubmitting(false)
+    } catch (e) {
+      console.log(e)
+    }
+  }
   return (
     <React.Fragment>
-      <Button>Connect to Strava</Button>
-      <Route path={`${baseRoute}connect/strava/auth`}>
-        <StravaAuth />
-      </Route>
-      <Route path={`${baseRoute}connect/strava/success/`}>
+      <Button onClick={onSubmit}>Connect to Strava</Button>
+      <Route path={`${baseRoute}/stravaConnected/`}>
         <StravaSuccess />
       </Route>
     </React.Fragment>
