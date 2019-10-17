@@ -142,8 +142,6 @@ const SignInForm: React.FunctionComponent<Props> = ({ onClick }) => {
         DisabledUserException: handleUserDisabled,
       }
 
-      console.log(errorCode)
-
       errorCode
         ? handler[errorCode](values.email)
         : authenticated && handleAuthenticated(user)
