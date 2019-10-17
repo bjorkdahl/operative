@@ -2,8 +2,8 @@ import { ApolloProvider } from '@apollo/react-hooks'
 import MomentUtils from '@date-io/moment'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import ApolloClient from 'apollo-boost'
-import AuthProvider from 'Contexts/Auth'
-import ModalProvider from 'Contexts/Modal'
+import AuthProvider from 'actions/Auth'
+import ModalProvider from 'actions/Modal'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
@@ -16,7 +16,7 @@ const client = new ApolloClient({
     const token = localStorage.getItem('operativeToken')
     operation.setContext({
       headers: {
-        authorization: token ? `${token}` : '',
+        authorization: token ? `Bearer ${token}` : '',
       },
     })
   },

@@ -3,8 +3,9 @@ import { useQuery, useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import Text from 'components/atoms/Text'
 import * as params from 'react-route-params'
-import { Redirect } from 'react-router'
+import { Redirect, Route } from 'react-router'
 import strings from 'strings'
+import { Button } from '@material-ui/core'
 
 const GET_STRAVA_OAUTH_URL = gql`
   query GetStravaOAuthUrl($callbackUrl: String!) {
@@ -17,10 +18,6 @@ const SET_STRAVA_OAUTH_TOKEN = gql`
     setStravaOAuthToken(token: $token)
   }
 `
-
-interface Props {
-  success?: boolean
-}
 
 const StravaAuth: React.FunctionComponent = () => {
   const { loading, error, data } = useQuery(GET_STRAVA_OAUTH_URL, {
@@ -40,14 +37,30 @@ const StravaSuccess: React.FunctionComponent = () => {
     query.code && setStravaOAuthToken({
       variables: { token: query.code },
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [data, query.code, setStravaOAuthToken])
 
   if (data) return <Redirect to='/profile' />
   return <Text>{query.error ? strings.get('NEED_STRAVA_PERMISSION') : strings.get('LOADING')}</Text>
 }
 
-const Strava: React.FunctionComponent<Props> = ({ success = false }) => {
-  return success ? <StravaSuccess /> : <StravaAuth />
+interface Props {
+  baseRoute: string
 }
+
+
+const Strava: React.FunctionComponent<Props> = ({ baseRoute }) => {
+  console.log(baseRoute)
+  return (
+    <React.Fragment>
+      <Button>Connect to Strava</Button>
+      <Route path={`${baseRoute}connect/strava/auth`}>
+        <StravaAuth />
+      </Route>
+      <Route path={`${baseRoute}connect/strava/success/`}>
+        <StravaSuccess />
+      </Route>
+    </React.Fragment>
+  )
+}
+
 export default Strava

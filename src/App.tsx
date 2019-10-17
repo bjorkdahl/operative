@@ -1,12 +1,12 @@
 import { CssBaseline } from '@material-ui/core'
 import Modal from 'components/Modal'
-import { ModalContextInstance } from 'Contexts/Modal'
+import { ModalContextInstance } from 'actions/Modal'
 import React, { lazy, Suspense, useContext } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { CubeSpinner } from 'react-spinners-kit'
 import Slider from './components/molecules/FullPageScroll'
 import NavBar from './components/molecules/NavBar'
-import { ProtectedRoute } from './Contexts/Auth/'
+import { ProtectedRoute } from './actions/Auth/'
 
 const IndexScreen = lazy(() => import('./screens/IndexScreen/IndexScreen'))
 const AboutScreen = lazy(() => import('./screens/AboutScreen/AboutScreen'))
