@@ -1,17 +1,18 @@
-import Text from 'components/atoms/Text'
+import { Button } from '@material-ui/core'
+import { AuthContextInstance } from 'actions/Auth'
+import Strava from 'actions/Strava'
 import React, { useContext } from 'react'
-import { useParams } from 'react-router'
-import { AuthContextInstance } from 'Contexts/Auth'
+import strings from 'strings'
 
 const ProfileScreen: React.FunctionComponent = () => {
-  const { id } = useParams()
   const authContext = useContext(AuthContextInstance)
-
   return (
-    <div>
-      <Text>{id}</Text>
-      <button onClick={() => authContext.signOut()}>logout</button>
-    </div>
+    <React.Fragment>
+      <Strava />
+      <Button onClick={() => authContext.signOut()}>
+        {strings.get('LOG_OUT')}
+      </Button>
+    </React.Fragment>
   )
 }
 

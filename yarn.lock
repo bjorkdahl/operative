@@ -9017,6 +9017,11 @@ react-page-slides@^0.1.3:
     react "^16.5.2"
     react-dom "^16.5.2"
 
+react-route-params@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-route-params/-/react-route-params-1.1.0.tgz#a7ce304a2282c2d639215ccf733afd45255db7c0"
+  integrity sha512-CaAeYulS5F8cUEwmdGFw3HBckMeP9OuMQVuu7pN2bR8vp6Ywm6JpRM39AxkSePgt9U7Lj8yUAjJmCp3Nbbe6QA==
+
 react-router-dom@^5.1.0:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-5.1.2.tgz#06701b834352f44d37fbb6311f870f84c76b9c18"

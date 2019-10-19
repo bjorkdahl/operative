@@ -4,8 +4,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Heading from 'components/atoms/Heading'
 import Text from 'components/atoms/Text'
-import { AuthContextInstance } from 'Contexts/Auth'
-import { ModalContextInstance } from 'Contexts/Modal'
+import { AuthContextInstance } from 'actions/Auth'
+import { ModalContextInstance } from 'actions/Modal'
 import { Field, Form, Formik, FormikValues } from 'formik'
 import { TextField } from 'formik-material-ui'
 import gql from 'graphql-tag'
@@ -119,7 +119,7 @@ const SignInForm: React.FunctionComponent<Props> = ({ onClick }) => {
 
   const handleAuthenticated = (user: User): void => {
     authContext.signIn(true, user.username, user.token)
-    history.push(`profile/${user.id}`)
+    history.push('/profile')
   }
 
   const onSubmit = async (
