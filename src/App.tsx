@@ -21,9 +21,9 @@ const App: React.FunctionComponent = () => {
   return (
     <Suspense fallback={<BallSpinner />}>
       <CssBaseline />
+      <NavBar />
       <Switch>
         <Route exact path="/">
-          <NavBar />
           <Slider />
         </Route>
         <Route exact path="/">

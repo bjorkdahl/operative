@@ -61,7 +61,6 @@ const useStyles = makeStyles({
   },
   field: {
     marginBottom: '10px',
-    color: '#9FEDD7',
   },
   button: {
     marginTop: '20px',

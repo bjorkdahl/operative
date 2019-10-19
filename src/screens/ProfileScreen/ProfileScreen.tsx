@@ -1,19 +1,69 @@
-import { Button } from '@material-ui/core'
-import { AuthContextInstance } from 'actions/Auth'
+import { Container, Grid, Paper } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import clsx from 'clsx'
+import React from 'react'
+import colors from 'strings/colors'
 import Strava from 'actions/Strava'
-import React, { useContext } from 'react'
-import strings from 'strings'
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+  },
+  appBarSpacer: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    height: '100vh',
+    overflow: 'auto',
+  },
+  container: {
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
+  },
+  paper: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
+    boxShadow: `0px 5px 15px ${colors.boxShadow}`,
+  },
+  fixedHeight: {
+    height: 240,
+  },
+}));
+
+
 
 const ProfileScreen: React.FunctionComponent = () => {
-  const authContext = useContext(AuthContextInstance)
+  const classes = useStyles()
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
+
   return (
-    <React.Fragment>
-      <Strava />
-      <Button onClick={() => authContext.signOut()}>
-        {strings.get('LOG_OUT')}
-      </Button>
-    </React.Fragment>
-  )
+    <div className={classes.root}>
+      <main className={classes.content}>
+        <div className={classes.appBarSpacer} />
+        <Container maxWidth="lg" className={classes.container}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={8} lg={9}>
+              <Paper elevation={1} className={fixedHeightPaper}>
+                1st
+                <Strava />
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={4} lg={3}>
+              <Paper elevation={2} className={fixedHeightPaper}>
+                2nd
+              </Paper>
+            </Grid>
+            <Grid item xs={12}>
+              <Paper elevation={20} className={classes.paper}>
+                3rd
+              </Paper>
+            </Grid>
+          </Grid>
+        </Container>
+      </main>
+    </div>
+  );
 }
 
 export default ProfileScreen
