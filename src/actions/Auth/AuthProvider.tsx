@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Redirect, Route } from 'react-router'
 
 interface AuthContext {
@@ -14,6 +14,19 @@ interface AuthState {
   token: string
   username: string
 }
+
+const checkAuth = (): boolean => {
+  const token = localStorage.getItem('operativeToken')
+  return token !== null && true
+}
+
+export const AuthContextInstance = React.createContext<AuthContext>({
+  authenticated: checkAuth(),
+  signIn: () => {},
+  signOut: () => {},
+  token: '',
+  username: '',
+})
 
 interface RouteProps {
   exact?: boolean
@@ -33,19 +46,6 @@ export const ProtectedRoute: React.FunctionComponent<RouteProps> = ({
   )
 }
 
-const checkAuth = (): boolean => {
-  const token = localStorage.getItem('operativeToken')
-  return token !== null && true
-}
-
-export const AuthContextInstance = React.createContext<AuthContext>({
-  authenticated: checkAuth(),
-  signIn: () => {},
-  signOut: () => {},
-  token: '',
-  username: '',
-})
-
 const AuthProvider: React.FunctionComponent<{}> = ({ children }) => {
   const [state, setState] = useState<AuthState>({
     authenticated: checkAuth(),
@@ -53,7 +53,7 @@ const AuthProvider: React.FunctionComponent<{}> = ({ children }) => {
     token: '',
   })
 
-  const signIn = (auth: boolean, username: string, token: string) => {
+  const signIn = (auth: boolean, username: string, token: string): void => {
     if (state.authenticated) {
       return
     }
@@ -68,7 +68,7 @@ const AuthProvider: React.FunctionComponent<{}> = ({ children }) => {
     })
   }
 
-  const signOut = () => {
+  const signOut = (): void => {
     if (!state.authenticated) {
       return
     }

@@ -2,7 +2,10 @@ import React, { useState } from 'react'
 
 interface ModalContext {
   component?: React.FunctionComponent
-  openModal: { (args: any): void }
+  openModal: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (args: any): void
+  }
   isOpen: boolean
 }
 
@@ -23,7 +26,7 @@ const ModalProvider: React.FunctionComponent<{}> = ({ children }) => {
     isOpen: false,
   })
 
-  const openModal = (component: React.FunctionComponent) => {
+  const openModal = (component: React.FunctionComponent): void => {
     if (state.isOpen) {
       return
     }

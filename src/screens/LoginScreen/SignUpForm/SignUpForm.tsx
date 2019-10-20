@@ -4,10 +4,17 @@ import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { KeyboardDatePicker } from '@material-ui/pickers'
+import { ModalContextInstance } from 'actions/Modal'
 import Heading from 'components/atoms/Heading/Heading'
 import Text from 'components/atoms/Text'
-import { ModalContextInstance } from 'actions/Modal'
-import { Field, Form, Formik, FormikProps, FormikValues } from 'formik'
+import {
+  Field,
+  Form,
+  Formik,
+  FormikProps,
+  FormikValues,
+  FormikActions,
+} from 'formik'
 import { TextField } from 'formik-material-ui'
 import gql from 'graphql-tag'
 import moment from 'moment'
@@ -128,8 +135,8 @@ const SignUpForm: React.FunctionComponent<Props> = () => {
 
   const onSubmit = async (
     values: FormikValues,
-    { setSubmitting }: any,
-  ): Promise<any> => {
+    { setSubmitting }: FormikActions<FormikValues>,
+  ): Promise<void> => {
     try {
       const success = await registerUser({
         variables: {

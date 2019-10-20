@@ -19,7 +19,6 @@ module.exports = {
         },
     },
     "rules": {
-        "ban-ts-ignore": 0,
         "react/prop-types": 0,
         "react/self-closing-comp": ["error", {
             "component": true,

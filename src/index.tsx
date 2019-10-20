@@ -15,7 +15,7 @@ import { createMuiTheme } from '@material-ui/core'
 
 const client = new ApolloClient({
   uri: 'http://localhost:3001/graphql',
-  request: operation => {
+  request: (operation): void => {
     const token = localStorage.getItem('operativeToken')
     operation.setContext({
       headers: {
@@ -38,7 +38,7 @@ const theme = createMuiTheme({
       dark: colors.colorSecondary,
     },
     background: {
-      paper: colors.colorWhite
+      paper: colors.colorWhite,
     },
     text: {
       primary: colors.colorText,
@@ -57,9 +57,9 @@ ReactDOM.render(
             </MuiPickersUtilsProvider>
           </BrowserRouter>
         </ApolloProvider>
-      </ModalProvider >
+      </ModalProvider>
     </MuiThemeProvider>
-  </AuthProvider >,
+  </AuthProvider>,
   document.getElementById('root'),
 )
 

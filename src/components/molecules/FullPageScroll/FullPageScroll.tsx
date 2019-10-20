@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react'
-import debounce from 'lodash/debounce'
-import styles from './FullPageScroll.module.scss'
-import { ISlideConfig, PageSlides, SlideParallaxType } from 'react-page-slides'
 import Text from 'components/atoms/Text'
-import strings from 'strings'
 import {
-  fullsizeImage,
   desktopImage,
-  desktopMediumImage,
   desktopLargeImage,
+  desktopMediumImage,
+  fullsizeImage,
   tabletImage,
 } from 'images/index/index'
+import debounce from 'lodash/debounce'
+import React, { useEffect, useState } from 'react'
+import { ISlideConfig, PageSlides, SlideParallaxType } from 'react-page-slides'
+import strings from 'strings'
+import styles from './FullPageScroll.module.scss'
 
 const selectImageSize = (): string => {
   switch (true) {

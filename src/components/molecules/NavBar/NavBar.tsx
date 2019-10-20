@@ -107,13 +107,13 @@ const NavBar: React.FunctionComponent = () => {
         <ListItemIcon>
           <AccountCircleIcon color="primary" />
         </ListItemIcon>
-        <ListItemText primary="Account" />
+        <ListItemText primary={strings.get('ACCOUNT')} />
       </ListItem>
       <ListItem button>
         <ListItemIcon>
           <SettingsIcon color="primary" />
         </ListItemIcon>
-        <ListItemText primary="Settings" />
+        <ListItemText primary={strings.get('SETTINGS')} />
       </ListItem>
       {authContext.authenticated ? (
         <ListItem button onClick={(): void => authContext.signOut()}>
