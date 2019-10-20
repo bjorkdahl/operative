@@ -1,9 +1,10 @@
 import { Container, Grid, Paper } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+import Strava from 'actions/Strava'
 import clsx from 'clsx'
+import AnimateCards from 'components/atoms/AnimateCards'
 import React from 'react'
 import colors from 'strings/colors'
-import Strava from 'actions/Strava'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,26 +44,27 @@ const ProfileScreen: React.FunctionComponent = () => {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper elevation={1} className={fixedHeightPaper}>
-                1st
-                <Strava />
+            <AnimateCards delay={{ initial: 100, trailing: 100 }}>
+              <Grid item xs={12} md={8} lg={9}>
+                <Paper elevation={1} className={fixedHeightPaper}>
+                  <Strava />
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={4} lg={3}>
+                <Paper elevation={2} className={fixedHeightPaper}>
+                  2nd
               </Paper>
-            </Grid>
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper elevation={2} className={fixedHeightPaper}>
-                2nd
+              </Grid>
+              <Grid item xs={12}>
+                <Paper elevation={20} className={classes.paper}>
+                  3rd
               </Paper>
-            </Grid>
-            <Grid item xs={12}>
-              <Paper elevation={20} className={classes.paper}>
-                3rd
-              </Paper>
-            </Grid>
+              </Grid>
+            </AnimateCards>
           </Grid>
         </Container>
       </main>
-    </div>
+    </div >
   );
 }
 

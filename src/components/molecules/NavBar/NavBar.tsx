@@ -10,8 +10,8 @@ import { AuthContextInstance } from 'actions/Auth'
 import cx from 'classnames'
 import Heading from 'components/atoms/Heading/'
 import React, { useContext } from 'react'
-import strings from 'strings'
 import { useHistory } from 'react-router'
+import strings from 'strings'
 
 const drawerWidth = 240
 
