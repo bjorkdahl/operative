@@ -30,9 +30,7 @@ const useStyles = makeStyles(theme => ({
   fixedHeight: {
     height: 240,
   },
-}));
-
-
+}))
 
 const ProfileScreen: React.FunctionComponent = () => {
   const classes = useStyles()
@@ -53,19 +51,19 @@ const ProfileScreen: React.FunctionComponent = () => {
               <Grid item xs={12} md={4} lg={3}>
                 <Paper elevation={2} className={fixedHeightPaper}>
                   2nd
-              </Paper>
+                </Paper>
               </Grid>
               <Grid item xs={12}>
                 <Paper elevation={20} className={classes.paper}>
                   3rd
-              </Paper>
+                </Paper>
               </Grid>
             </AnimateCards>
           </Grid>
         </Container>
       </main>
-    </div >
-  );
+    </div>
+  )
 }
 
 export default ProfileScreen

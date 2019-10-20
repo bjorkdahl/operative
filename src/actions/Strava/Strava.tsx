@@ -25,7 +25,7 @@ const useStyles = makeStyles({
   container: {
     display: 'flex',
     marginRight: '20px',
-  }
+  },
 })
 
 const StravaSuccess: React.FunctionComponent = () => {
@@ -33,21 +33,26 @@ const StravaSuccess: React.FunctionComponent = () => {
   const [setStravaOAuthToken, { data }] = useMutation(SET_STRAVA_OAUTH_TOKEN)
 
   useEffect(() => {
-    query.code && setStravaOAuthToken({
-      variables: { token: query.code },
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    query.code &&
+      setStravaOAuthToken({
+        variables: { token: query.code },
+      })
+    // eslint-disable-next-line
   }, [setStravaOAuthToken])
 
-  if (data) return <Redirect to='/profile' />
-  return query.error ? <Text>{strings.get('NEED_STRAVA_PERMISSION')}</Text> : <BallSpinner />
+  if (data) return <Redirect to="/profile" />
+  return query.error ? (
+    <Text>{strings.get('NEED_STRAVA_PERMISSION')}</Text>
+  ) : (
+    <BallSpinner />
+  )
 }
 
 const Strava: React.FunctionComponent = () => {
   const classes = useStyles()
   const [getStravaURL, { error, data }] = useLazyQuery(GET_STRAVA_OAUTH_URL, {
     variables: {
-      callbackUrl: `http://localhost:3000/profile/stravaAuth`
+      callbackUrl: `http://localhost:3000/profile/stravaAuth`,
     },
   })
   const onSubmit = async (): Promise<void> => {
@@ -58,7 +63,7 @@ const Strava: React.FunctionComponent = () => {
     }
   }
 
-  if (error) return <Redirect to='/profile' />
+  if (error) return <Redirect to="/profile" />
   data && (window.location.href = data.getStravaOAuthUrl)
 
   return (

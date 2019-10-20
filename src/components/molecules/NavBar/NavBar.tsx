@@ -1,4 +1,15 @@
-import { AppBar, Badge, Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, Toolbar } from '@material-ui/core'
+import {
+  AppBar,
+  Badge,
+  Divider,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
@@ -78,18 +89,15 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-
-
-
 const NavBar: React.FunctionComponent = () => {
   const authContext = useContext(AuthContextInstance)
   const history = useHistory()
   const classes = useStyles()
   const [open, setOpen] = React.useState(false)
-  const handleDrawerOpen = () => {
+  const handleDrawerOpen = (): void => {
     setOpen(true)
   }
-  const handleDrawerClose = () => {
+  const handleDrawerClose = (): void => {
     setOpen(false)
   }
 
@@ -107,30 +115,30 @@ const NavBar: React.FunctionComponent = () => {
         </ListItemIcon>
         <ListItemText primary="Settings" />
       </ListItem>
-      {authContext.authenticated
-        ? (
-          <ListItem button onClick={() => authContext.signOut()}>
-            <ListItemIcon>
-              <ExitToAppRoundedIcon color="primary" />
-            </ListItemIcon>
-            <ListItemText primary={strings.get('LOG_OUT')} />
-          </ListItem >
-        )
-        : (
-          <ListItem button onClick={() => history.push('/login')}>
-            <ListItemIcon>
-              <ExitToAppRoundedIcon color="primary" />
-            </ListItemIcon>
-            <ListItemText primary={strings.get('LOG_IN')} />
-          </ListItem >
-        )
-      }
-    </div >
+      {authContext.authenticated ? (
+        <ListItem button onClick={(): void => authContext.signOut()}>
+          <ListItemIcon>
+            <ExitToAppRoundedIcon color="primary" />
+          </ListItemIcon>
+          <ListItemText primary={strings.get('LOG_OUT')} />
+        </ListItem>
+      ) : (
+        <ListItem button onClick={(): void => history.push('/login')}>
+          <ListItemIcon>
+            <ExitToAppRoundedIcon color="primary" />
+          </ListItemIcon>
+          <ListItemText primary={strings.get('LOG_IN')} />
+        </ListItem>
+      )}
+    </div>
   )
 
   return (
     <React.Fragment>
-      <AppBar position="absolute" className={cx(classes.appBar, open && classes.appBarShift)}>
+      <AppBar
+        position="absolute"
+        className={cx(classes.appBar, open && classes.appBarShift)}
+      >
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
@@ -152,14 +160,13 @@ const NavBar: React.FunctionComponent = () => {
         </Toolbar>
       </AppBar>
       <Drawer
-        variant='temporary'
-        onBackdropClick={() => setOpen(!open)}
+        variant="temporary"
+        onBackdropClick={(): void => setOpen(!open)}
         classes={{
           paper: cx(classes.drawerPaper, !open && classes.drawerPaperClose),
         }}
         open={open}
       >
-
         <div className={classes.toolbarIcon}>
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
