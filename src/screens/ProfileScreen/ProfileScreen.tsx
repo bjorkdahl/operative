@@ -2,7 +2,6 @@ import { Container, Grid, Paper, Avatar } from '@material-ui/core'
 import FiberNewOutlinedIcon from '@material-ui/icons/FiberNewOutlined'
 import { makeStyles } from '@material-ui/core/styles'
 import Strava from 'actions/Strava'
-import clsx from 'clsx'
 import AnimateCards from 'components/molecules/AnimateCards'
 import React from 'react'
 import colors from 'strings/colors'
@@ -36,8 +35,8 @@ const useStyles = makeStyles(theme => ({
     right: '0',
     top: '0',
     margin: 10,
-    width: 60,
-    height: 60,
+    width: 40,
+    height: 40,
   },
 }))
 
