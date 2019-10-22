@@ -37,12 +37,14 @@ const LoginScreen: React.FunctionComponent = () => {
   })
 
   const pages = [
-    ({ style }: any) => (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ({ style }: any): any => (
       <animated.div style={{ ...style }}>
         <SignInForm onClick={onClick} />
       </animated.div>
     ),
-    ({ style }: any) => (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ({ style }: any): any => (
       <animated.div style={{ ...style }}>
         <SignUpForm onClick={onClick} />
       </animated.div>

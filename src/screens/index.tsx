@@ -1,4 +1,4 @@
-import IndexScreen from './IndexScreen'
-import AboutScreen from './AboutScreen/'
+import LoginScreen from './LoginScreen'
+import ProfileScreen from './ProfileScreen/'
 
-export { IndexScreen, AboutScreen }
+export { LoginScreen, ProfileScreen }

@@ -2,11 +2,11 @@ import { useMutation } from '@apollo/react-hooks'
 import { Avatar, Button, Grid, Link } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
-import Heading from 'components/atoms/Heading'
-import Text from 'components/atoms/Text'
 import { AuthContextInstance } from 'actions/Auth'
 import { ModalContextInstance } from 'actions/Modal'
-import { Field, Form, Formik, FormikValues } from 'formik'
+import Heading from 'components/atoms/Heading'
+import Text from 'components/atoms/Text'
+import { Field, Form, Formik, FormikActions, FormikValues } from 'formik'
 import { TextField } from 'formik-material-ui'
 import gql from 'graphql-tag'
 import React, { useContext } from 'react'
@@ -61,7 +61,6 @@ const useStyles = makeStyles({
   },
   field: {
     marginBottom: '10px',
-    color: '#9FEDD7',
   },
   button: {
     marginTop: '20px',
@@ -76,7 +75,7 @@ const useStyles = makeStyles({
   },
 })
 
-const initialValues = { email: '', password: '' }
+const initialValues: FormikValues = { email: '', password: '' }
 
 interface Props {
   onClick: () => void
@@ -124,7 +123,7 @@ const SignInForm: React.FunctionComponent<Props> = ({ onClick }) => {
 
   const onSubmit = async (
     values: FormikValues,
-    { setSubmitting }: any,
+    { setSubmitting }: FormikActions<FormikValues>,
   ): Promise<void> => {
     try {
       const {
@@ -135,6 +134,7 @@ const SignInForm: React.FunctionComponent<Props> = ({ onClick }) => {
         variables: { username: values.email, password: values.password },
       })
 
+      // eslint-disable-next-line
       const handler: any = {
         UserNotConfirmedException: handleNeedsConfirmation,
         NotAuthorizedException: handleInvalidCredentials,
@@ -166,7 +166,8 @@ const SignInForm: React.FunctionComponent<Props> = ({ onClick }) => {
         validationSchema={SignInSchema}
         onSubmit={onSubmit}
       >
-        {({ isSubmitting }): any => (
+        {// eslint-disable-next-line
+          ({ isSubmitting }) => (
           <Form className={classes.form}>
             <Field
               className={classes.field}

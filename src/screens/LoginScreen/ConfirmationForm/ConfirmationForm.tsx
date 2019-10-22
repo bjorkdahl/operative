@@ -60,7 +60,7 @@ const ConfirmationForm: React.FunctionComponent<Props> = ({ user }) => {
   const history = useHistory()
   const classes = useStyles()
 
-  const onSubmit = async (values: FormikValues): Promise<any> => {
+  const onSubmit = async (values: FormikValues): Promise<void> => {
     try {
       const {
         data: { id },
@@ -73,7 +73,7 @@ const ConfirmationForm: React.FunctionComponent<Props> = ({ user }) => {
     }
   }
 
-  const onResendCode = async (): Promise<any> => {
+  const onResendCode = async (): Promise<void> => {
     try {
       const response = await resendConfirmationCode({
         variables: { username: user },
@@ -90,7 +90,8 @@ const ConfirmationForm: React.FunctionComponent<Props> = ({ user }) => {
       validationSchema={ConfirmationSchema}
       onSubmit={onSubmit}
     >
-      {({ isSubmitting }): any => (
+      {// eslint-disable-next-line
+        ({ isSubmitting }) => (
         <React.Fragment>
           <Heading>Account confirmation</Heading>
           {!message ? (

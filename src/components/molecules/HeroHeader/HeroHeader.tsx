@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react'
-import styles from './HeroHeader.module.scss'
-import debounce from 'lodash/debounce'
-import Text from 'components/atoms/Text/Text'
 import Heading from 'components/atoms/Heading/Heading'
+import Text from 'components/atoms/Text/Text'
 import {
-  fullsizeImage,
   desktopImage,
-  desktopMediumImage,
   desktopLargeImage,
+  desktopMediumImage,
+  fullsizeImage,
   tabletImage,
 } from 'images'
+import debounce from 'lodash/debounce'
+import React, { useEffect, useState } from 'react'
+import styles from './HeroHeader.module.scss'
 
 interface Props {
   heading: string

@@ -6,6 +6,7 @@ const colors = {
   colorAccentSecondary: '#FEF9C7',
   colorPrimary: '#026670',
   colorSecondary: '#9FEDD7',
+  boxShadow: '#E8E8E8',
 }
 
 export default colors

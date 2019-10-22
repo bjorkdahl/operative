@@ -16,6 +16,7 @@
     "apollo-boost": "^0.4.4",
     "apollo-client": "^2.6.4",
     "classnames": "^2.2.6",
+    "eslint-plugin-react": "^7.16.0",
     "formik": "^1.5.8",
     "formik-material-ui": "0.0.22",
     "graphql": "^14.5.8",
